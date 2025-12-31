@@ -2,5 +2,5 @@ cmake_minimum_required(VERSION 3.22)
 
 project(CppCMakeTemplate VERSION 1.0.0 LANGUAGES C CXX)
 
-add_executable(executable main.cpp)
-
+add_subdirectory(src)
+add_subdirectory(app)
