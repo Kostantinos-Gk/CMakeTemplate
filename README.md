@@ -30,7 +30,7 @@ This repository is intended to be used as a **starting point** for new C++ proje
 
 ## Steps for Generate, Build, Run a Cmake project.
 
-### New build, root project directory
+### 1. New build, root project directory
 
 ```bash
 mkdir build
@@ -39,15 +39,95 @@ cmake -S .. -B . # Option 1
 cmake .. # Option 2
 ```
 
-### Existing build, the generated project is updated
+### 2. Existing build, the generated project is updated
 
 ```bash
 cd build
 cmake .
 ```
 
-## Run the Executable
+### 3. Run the Executable
 
 ```bash
 ./build/app/executable
 ```
+---
+
+## CMake Generators
+
+CMake uses **generators** to produce build files for a specific build system.  
+The generator determines **how** your project is built, but not **what** is built.
+
+Common generators include:
+
+- **Unix Makefiles**  
+  Generates traditional `Makefile`s.  
+  Default on most Unix-like systems.
+  
+- **Ninja**  
+  Generates build files for the Ninja build system.  
+  Faster than Makefiles and recommended for large projects.
+
+- **Xcode**  
+  Generates an Xcode project (`.xcodeproj`).  
+  Useful on macOS when working with Xcode.
+
+- **Visual Studio**  
+  Generates Visual Studio solutions on Windows.
+
+### Notes
+- `-G` specifies the generator that we use
+- `-S` specifies the source directory
+- `-B` specifies the build directory
+- Ninja is recommended for faster builds when available
+
+### Generator for GCC and Clang (Unix Makefiles)
+
+Generates traditional Makefiles.  
+Works with **GCC** and **Clang** on Linux and macOS.
+
+```bash
+cd build
+cmake -S .. -B . -G "Unix Makefiles"   # Option 1 (recommended)
+cmake .. -G "Unix Makefiles"           # Option 2 (legacy)
+```
+
+### Generator for MSVC
+
+```bash
+cd build
+cmake -S .. -B . -G "Visual Studio 17 2022" -A x64   # Option 1 (recommended)
+cmake .. -G "Visual Studio 17 2022"                  # Option 2
+```
+
+### Generator for Xcode
+
+```bash
+cd build
+cmake -S .. -B . -G Xcode              # Option 1 (recommended)
+cmake .. -G Xcode                      # Option 2 (legacy)
+```
+### Generator for Ninja
+
+```bash
+cd build
+cmake -S .. -B . -G Ninja              # Option 1 (recommended)
+cmake .. -G Ninja                      # Option 2 (legacy)
+```
+
+## Get the list of Generators
+
+```bash
+cmake --help
+```
+
+## Common CMake Generators
+
+| Platform        | Generator Name                 | Description                                  | Example Command |
+|-----------------|--------------------------------|----------------------------------------------|-----------------|
+| Linux / macOS   | Unix Makefiles                 | Traditional Makefiles for GCC / Clang        | `cmake -S . -B build -G "Unix Makefiles"` |
+| Cross-platform  | Ninja                          | Fast and efficient build system              | `cmake -S . -B build -G Ninja` |
+| macOS           | Xcode                          | Generates an Xcode project                   | `cmake -S . -B build -G Xcode` |
+| Windows         | Visual Studio 17 2022          | Generates a Visual Studio solution (.sln)    | `cmake -S . -B build -G "Visual Studio 17 2022" -A x64` |
+
+
